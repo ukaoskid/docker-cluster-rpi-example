@@ -3,7 +3,16 @@
 #
 
 # Base image.
-FROM arm32v6/node:alpine as builder
+FROM balenalib/raspberry-pi-alpine-node:10.15-latest
+
+RUN apk add --update \
+    linux-headers \
+    python \
+    python-dev \
+    py-pip \
+    build-base \
+  && pip install virtualenv \
+  && rm -rf /var/cache/apk/*
 
 RUN mkdir -p /usr/docker-rpi
 WORKDIR /usr/docker-rpi
@@ -13,7 +22,7 @@ COPY package*.json /usr/docker-rpi/
 RUN npm install
 
 # Copy source into image.
-COPY . /usr/src/docker-rpi/
+COPY . /usr/docker-rpi/
 
 # Building app.
 RUN npm run-script build
@@ -30,8 +39,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copying nginx configuration.
 COPY /nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copying openhome-panel source into web server root.
-COPY --from=builder /usr/src/openhome-panel/docker-rpi /usr/share/nginx/html
+# Copying source into web server root.
+COPY --from=0 /usr/docker-rpi/dist /usr/share/nginx/html
 
 # Exposing ports.
 EXPOSE 80
