@@ -1,5 +1,7 @@
 # Building a Raspberry Pi Cluster with Docker
-From configuring the cluster to the 3D rack printing.
+[**Read the full article**](https://medium.com/@simone.dicicco/building-a-raspberry-pi-cluster-with-docker-8d53ee614479)
+
+From configuring the cluster to the 3D rack printing. 
 
 The Raspberry Pi is a great piece of hardware and thanks to its price (just 35$ for the Model 3 B+ and 10$ for the Model Zero W) enables everyone and everything to the world of computing.
 However, the price is not the only advantage.
